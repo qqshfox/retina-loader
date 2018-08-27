@@ -34,9 +34,14 @@ const images = [];
 ${results.map(({result}) => result + "\nimages.push(module.exports);").join("\n")}
 const srcset = images.length > 0 ? images.map((image, i) => image + ' ' + scales[i]).join(', ') : null;
 
+const cssImage = \`url(\${src})\`;
+const cssImageSet = images.length > 0 ? images.map((image, i) => \`url(\${image})\` + ' ' + scales[i]).join(', ') : null;
+
 module.exports = {
   src,
   srcset,
+  cssImage,
+  cssImageSet,
 };`;
 }
 
