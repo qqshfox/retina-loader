@@ -20,9 +20,12 @@ module.exports = function loader(src) {
   const results = [];
   for (const scale of scales) {
     const p = path.join(pth.dir, pth.name + '@' + scale + pth.ext);
-    const result = urlLoader.call({...this, resourcePath: p, query: url_loader_options}, fs.readFileSync(p));
-    this.addDependency(p);
-    results.push({scale, result});
+    try {
+      const result = urlLoader.call({...this, resourcePath: p, query: url_loader_options}, fs.readFileSync(p));
+      this.addDependency(p);
+      results.push({scale, result});
+    } catch (_err) {
+    }
   }
 
   return `${src}
