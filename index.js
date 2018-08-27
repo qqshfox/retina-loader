@@ -17,7 +17,6 @@ module.exports = function loader(src) {
 
   const urlLoader = require('url-loader');
 
-  const origin = urlLoader.call({...this, query: url_loader_options}, src);
   const results = [];
   for (const scale of scales) {
     const p = path.join(pth.dir, pth.name + '@' + scale + pth.ext);
@@ -26,7 +25,7 @@ module.exports = function loader(src) {
     results.push({scale, result});
   }
 
-  return `${origin}
+  return `${src}
 const src = module.exports;
 
 const scales = ${JSON.stringify(results.map(({scale}) => scale))};
