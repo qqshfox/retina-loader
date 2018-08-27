@@ -1,4 +1,5 @@
 const { getOptions } = require('loader-utils');
+const sizeOf = require('image-size');
 const path = require('path');
 const fs = require('fs');
 
@@ -12,6 +13,8 @@ module.exports = function loader(src) {
   const options = getOptions(this) || {};
   const scales = options.scales || DEFAULT_SCALES;
   const url_loader_options = options['url-loader'] || DEFAULT_URL_LOADER_OPTIONS;
+
+  const dimensions = sizeOf(this.resourcePath);
 
   const pth = path.parse(this.resourcePath);
 
@@ -30,6 +33,7 @@ module.exports = function loader(src) {
 
   return `${src}
 const src = module.exports;
+const dimensions = ${JSON.stringify(dimensions)};
 
 const scales = ${JSON.stringify(results.map(({scale}) => scale))};
 const images = [];
@@ -44,6 +48,7 @@ module.exports = {
   srcset,
   cssImage,
   cssImageSet,
+  ...dimensions,
 };
 
 module.exports.toString = () => src;`;
