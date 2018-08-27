@@ -41,6 +41,10 @@ module.exports = {
   srcset,
   cssImage,
   cssImageSet,
+};
+
+module.exports.toString = function () {
+  return src;
 };`;
 }
 
