@@ -46,9 +46,7 @@ module.exports = {
   cssImageSet,
 };
 
-module.exports.toString = function () {
-  return src;
-};`;
+module.exports.toString = () => src;`;
 }
 
 module.exports.raw = true;
