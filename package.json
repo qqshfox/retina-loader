@@ -1,0 +1,18 @@
+{
+  "name": "retina-loader",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hanfei Shen <qqshfox@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "webpack": "^4.0.0"
+  },
+  "dependencies": {
+    "loader-utils": "^1.1.0",
+    "url-loader": "^1.1.1"
+  }
+}
