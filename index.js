@@ -32,26 +32,33 @@ module.exports = function loader(src) {
   }
 
   return `${src}
-const src = module.exports;
-const dimensions = ${JSON.stringify(dimensions)};
+var src = module.exports;
+var dimensions = ${JSON.stringify(dimensions)};
 
-const scales = ['1x', ...${JSON.stringify(results.map(({scale}) => scale))}];
-const images = [src];
+var scales = ['1x'];
+scales = scales.concat(${JSON.stringify(results.map(({scale}) => scale))});
+var images = [src];
 ${results.map(({result}) => result + "\nimages.push(module.exports);").join("\n")}
-const srcset = images.length > 0 ? images.map((image, i) => image + ' ' + scales[i]).join(', ') : null;
+var srcset = images.length > 0 ? images.map(function (image, i) { return image + ' ' + scales[i]}).join(', ') : null;
 
-const cssImage = \`url(\${src})\`;
-const cssImageSet = images.length > 0 ? images.map((image, i) => \`url(\${image})\` + ' ' + scales[i]).join(', ') : null;
+var cssImage = 'url(' + src + ')';
+var cssImageSet = images.length > 0 ? images.map(function (image, i) { return 'url(' + image + ') ' + scales[i] }).join(', ') : null;
 
-module.exports = {
-  src,
-  srcset,
-  cssImage,
-  cssImageSet,
-  ...dimensions,
-};
+module.exports = [{
+  src: src,
+  srcset: srcset,
+  cssImage: cssImage,
+  cssImageSet: cssImageSet,
+}, dimensions].reduce(function (r, o) {
+  Object.keys(o).forEach(function (k) {
+    r[k] = o[k];
+  });
+  return r;
+}, {});
 
-module.exports.toString = () => src;`;
+module.exports.toString = function () {
+  return src;
+}`;
 }
 
 module.exports.raw = true;
