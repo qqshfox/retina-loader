@@ -35,8 +35,8 @@ module.exports = function loader(src) {
 const src = module.exports;
 const dimensions = ${JSON.stringify(dimensions)};
 
-const scales = ${JSON.stringify(results.map(({scale}) => scale))};
-const images = [];
+const scales = ['1x', ...${JSON.stringify(results.map(({scale}) => scale))}];
+const images = [src];
 ${results.map(({result}) => result + "\nimages.push(module.exports);").join("\n")}
 const srcset = images.length > 0 ? images.map((image, i) => image + ' ' + scales[i]).join(', ') : null;
 
