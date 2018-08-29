@@ -39,10 +39,10 @@ var scales = ['1x'];
 scales = scales.concat(${JSON.stringify(results.map(({scale}) => scale))});
 var images = [src];
 ${results.map(({result}) => result + "\nimages.push(module.exports);").join("\n")}
-var srcset = images.length > 0 ? images.map(function (image, i) { return encodeURI(image) + ' ' + scales[i]}).join(', ') : null;
+var srcset = images.length > 1 ? images.map(function (image, i) { return encodeURI(image) + ' ' + scales[i]}).join(', ') : null;
 
 var cssImage = 'url(' + src + ')';
-var cssImageSet = images.length > 0 ? images.map(function (image, i) { return 'url(' + image + ') ' + scales[i] }).join(', ') : null;
+var cssImageSet = images.length > 1 ? images.map(function (image, i) { return 'url(' + image + ') ' + scales[i] }).join(', ') : null;
 
 module.exports = [{
   src: src,
